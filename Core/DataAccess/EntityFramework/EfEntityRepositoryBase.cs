@@ -9,8 +9,8 @@ using System.Linq;
 namespace Core.DataAccess.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
-        where TContext : DbContext, new()
+      where TEntity : class, IEntity, new()
+      where TContext : DbContext, new()
     {
         public void Add(TEntity entity)
         {
@@ -19,7 +19,6 @@ namespace Core.DataAccess.EntityFramework
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
                 context.SaveChanges();
-
             }
         }
 
@@ -45,9 +44,9 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                return filter == null 
+                return filter == null
                     ? context.Set<TEntity>().ToList()
-                    :context.Set<TEntity>().Where(filter).ToList();
+                    : context.Set<TEntity>().Where(filter).ToList();
             }
         }
 
@@ -55,8 +54,8 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                var updetedEntity = context.Entry(entity);
-                updetedEntity.State = EntityState.Modified;
+                var updatedEntity = context.Entry(entity);
+                updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
