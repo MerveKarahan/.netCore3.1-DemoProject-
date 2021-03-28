@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new ReCapContext())
             {
-                var result = from operationClaim in context.OperationsClaims
+                var result = from operationClaim in context.OperationClaims
                              join userOperationClaim in context.UserOperationsClaims
                                  on operationClaim.Id equals userOperationClaim.OperationClaimId
                              where userOperationClaim.UserId == user.Id
