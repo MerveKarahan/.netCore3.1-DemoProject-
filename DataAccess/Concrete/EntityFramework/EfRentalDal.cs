@@ -23,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
            
             var result= (from rent in _reCapContext.Rentals
                            join customer in _reCapContext.Customers
-                           on rent.CustomerId equals customer.Id
+                           on rent.CustomerId equals customer.CustomerId
                            join car in _reCapContext.Cars
                            on rent.CarId equals car.CarId
                            join user in _reCapContext.Users
