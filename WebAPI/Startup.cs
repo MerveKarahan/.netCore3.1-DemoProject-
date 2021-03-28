@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace WebAPI
 {
@@ -23,11 +24,16 @@ namespace WebAPI
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
+
         {
+
             services.AddControllers();
 
             services.AddCors();
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReCap Project", Version = "v1" });
+            });
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -59,6 +65,9 @@ namespace WebAPI
             }
 
             //app.ConfigureCustomExceptionMiddleware();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ReCap Project"));
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
