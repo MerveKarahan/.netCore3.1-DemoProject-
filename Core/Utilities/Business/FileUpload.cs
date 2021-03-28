@@ -9,69 +9,36 @@ namespace Core.Utilities.Business
 {
     public class FileUpload
     {
-        public static IResult Upload(IFormFile file, string path)
+        public static string Add(IFormFile image)
         {
-            var type = Path.GetExtension(file.FileName);
-            var result = BusinessRules.Run(
-                CheckFileExists(file));
-            if (result != null)
-            {
-                return result;
-            }
-            string GuidKey = Guid.NewGuid().ToString();
-            CheckDirectoryExists(path);
-            CreateImageFile(path + GuidKey + type, file);
-            return new SuccessResult((path + GuidKey + type).Replace("\\", "/"));
-        }
+            string directory = Environment.CurrentDirectory + @"\wwwroot\";
+            string fileName = CreateNewFileName(image.FileName);
 
-        public static IResult Update(IFormFile file, string imagePath)
-        {
-            var type = Path.GetExtension(file.FileName);
-            var result = BusinessRules.Run(
-                CheckFileExists(file));
-            if (result != null)
+            string path = Path.Combine(directory, "Images");
+            if (!Directory.Exists(path))
             {
-                return result;
+                Directory.CreateDirectory(path);
             }
-            string GuidKey = Guid.NewGuid().ToString();
-            DeleteOldImageFile(imagePath);
-            CheckDirectoryExists(imagePath);
-            CreateImageFile(imagePath + GuidKey + type, file);
-            return new SuccessResult((imagePath + GuidKey + type).Replace("\\", "/"));
-        }
-
-        private static IResult CheckFileExists(IFormFile file)
-        {
-            if (file != null && file.Length > 0)
+            using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
             {
-                return new SuccessResult();
-            }
-            return new ErrorResult("File doesn't exists.");
-        }
-        
-        private static void CheckDirectoryExists(string directory)
-        {
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-        }
-        private static void CreateImageFile(string directory, IFormFile file)
-        {
-            using (FileStream fs = File.Create(directory))
-            {
-                file.CopyTo(fs);
-                fs.Flush();
-            }
-        }
-
-        private static void DeleteOldImageFile(string directory)
-        {
-            if (File.Exists(directory.Replace("/", "\\")))
-            {
-                File.Delete(directory.Replace("/", "\\"));
+                image.CopyTo(stream);
             }
 
+            string filePath = Path.Combine(path, fileName);
+            return fileName;
+        }
+
+        public static string CreateNewFileName(string fileName)
+        {
+            string[] file = fileName.Split('.');
+            string extension = file[1];
+            string newFileName = string.Format(@"{0}." + extension, Guid.NewGuid());
+            return newFileName;
+        }
+
+        public static void Delete(string path)
+        {
+            File.Delete(path);
         }
     }
 }

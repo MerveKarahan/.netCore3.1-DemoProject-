@@ -35,6 +35,11 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        public IDataResult<Customer> GetById(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IResult Update(Customer customer)
         {
             throw new NotImplementedException();

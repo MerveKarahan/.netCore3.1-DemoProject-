@@ -34,6 +34,7 @@ namespace Business.Constants
         public static string CustomerListed = "Müşteri listelendi";
 
         public static string RentalAdded = "Araç kiralandı";
+        public static string RentalError = "Hata";
         public static string RentalUpdated = "Kiralanan araç güncellendi";
         public static string RentalDeleted = "Kiralanan araç silindi";
         public static string RentalListed = "Kiralanan araçlar listelendi";

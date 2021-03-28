@@ -22,21 +22,18 @@ namespace Business.Concrete
         }
 
        // [ValidationAspect(typeof(AddCarImageValidator))]
-        public IResult Add(CarImagesDto carImagesDto)
+        public IResult Add(IFormFile image, CarImage img)
         {
-            var result = BusinessRules.Run(CheckIfCarImageLimitExceded(carImagesDto.CarId));
+            
+
+            var result = BusinessRules.Run(CheckIfCarImageLimitExceded (img.CarId));
             if (result!=null)
             {
                 return result;
             }
-            CarImage carImage = new CarImage
-            {
-                CarId = carImagesDto.CarId,
-                ImagePath = FileUpload.Upload(carImagesDto.ImageFile, "\\image\\").Message,
-                Date = DateTime.Now
-            };
-            carImage.Date = DateTime.Now;
-            _carImageDal.Add(carImage);
+            img.ImagePath = FileUpload.Add(image);
+            img.Date = DateTime.Now;
+            _carImageDal.Add(img);
             return new SuccessResult(Messages.CarImageAdded);
         }
 
@@ -98,10 +95,11 @@ namespace Business.Concrete
             {
                 return result;
             }
-            var imageResult = FileUpload.Update(image, "\\image\\").Message;
-            carImage.ImagePath = imageResult;
-            carImage.Date = DateTime.Now;
-            _carImageDal.Add(carImage);
+            var carImg = _carImageDal.Get(x => x.Id == carImage.Id);
+            carImg.Date = DateTime.Now;
+            carImg.ImagePath = FileUpload.Add(image);
+            FileUpload.Delete(carImage.ImagePath);
+            _carImageDal.Update(carImg);
             return new SuccessResult();
         }
 
@@ -113,6 +111,11 @@ namespace Business.Concrete
                 return new ErrorResult();
             }
             return new SuccessResult();
+        }
+
+        public IDataResult<CarImage> Get(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
