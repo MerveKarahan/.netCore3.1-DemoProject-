@@ -3,6 +3,7 @@ using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,9 +27,9 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
 
         {
-
+            
             services.AddControllers();
-
+            services.AddDbContext<ReCapContext>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

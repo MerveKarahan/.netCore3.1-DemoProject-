@@ -43,6 +43,7 @@ namespace DataAccess.Concrete.EntityFramework
 
                           }).FirstOrDefault();
             return result;
+            
         }
 
     }

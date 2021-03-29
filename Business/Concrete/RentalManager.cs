@@ -24,8 +24,8 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if ( _rentalDal.GetRentalDetailsById(rental.Id).ReturnDate  == null)
-                return new ErrorResult(Messages.NoReturnDate);
+            if ( _rentalDal.Get(r=> r.CarId==rental.CarId && r.ReturnDate>rental.ReturnDate)!=null)
+               return new ErrorResult(Messages.NoReturnDate);
 
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
