@@ -29,8 +29,6 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
            
-        
-
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
 
@@ -81,12 +79,13 @@ namespace Business.Concrete
         public IResult Update(Car car)
         {
             _carDal.Update(car);
-            return new SuccessResult(Messages.CarListed);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         IResult ICarService.Delete(Car car)
         {
-            throw new NotImplementedException();
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
     }
 }
