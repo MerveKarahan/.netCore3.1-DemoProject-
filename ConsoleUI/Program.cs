@@ -32,25 +32,25 @@ namespace ConsoleUI
             colorManager.Add(new Color { ColorName = "Mavi" });
 
 
-            CarManager carManager = new CarManager(new EfCarDal());
-            var result = carManager.GetCarDetails();
-            if (result.Success == true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine(car.CarName + "/" + car.CarName);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //var result = carManager.GetCarDetails();
+            //if (result.Success == true)
+            //{
+            //    foreach (var car in result.Data)
+            //    {
+            //        Console.WriteLine(car.CarName + "/" + car.CarName);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
 
-            carManager.Add(new Car { BrandId = 1, ColorId = 1, Description = "büyük araç", CarName = "bilmiyom", DailyPrice = 500, ModelYear = 2019 });
-            foreach (var car in carManager.GetCarDetails().Data)
-            {
-                Console.WriteLine(car.CarId);
-            }
+            //carManager.Add(new Car { BrandId = 1, ColorId = 1, Description = "büyük araç", CarName = "bilmiyom", DailyPrice = 500, ModelYear = 2019 });
+            //foreach (var car in carManager.GetCarDetails().Data)
+            //{
+            //    Console.WriteLine(car.CarId);
+            //}
         }
     }
 }
