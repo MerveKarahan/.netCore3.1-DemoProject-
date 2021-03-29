@@ -11,6 +11,13 @@ namespace Core.Utilities.Business
     {
         public static string Add(IFormFile image)
         {
+
+            if (image==null)
+            {
+                return "default.png";
+
+            }
+
             string directory = Environment.CurrentDirectory + @"\wwwroot\";
             string fileName = CreateNewFileName(image.FileName);
 
