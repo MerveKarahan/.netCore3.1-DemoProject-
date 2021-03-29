@@ -36,9 +36,19 @@ namespace Core.Utilities.Business
             return newFileName;
         }
 
-        public static void Delete(string path)
+        public static bool Delete(string path)
         {
-            File.Delete(path);
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

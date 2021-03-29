@@ -6,6 +6,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace Business.Concrete
   public class CarImageManager : ICarImageService
     {
         private ICarImageDal _carImageDal;
-        public CarImageManager(ICarImageDal carImageDal)
+        private IHostingEnvironment _hostingEnvironment;
+        public CarImageManager(ICarImageDal carImageDal, IHostingEnvironment hostingEnvironment)
         {
             _carImageDal = carImageDal;
+            _hostingEnvironment = hostingEnvironment;
         }
 
        // [ValidationAspect(typeof(AddCarImageValidator))]
@@ -39,13 +42,18 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage entity)
         {
-            var result = BusinessRules.Run();
-            if (!result.Success)
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            
+            
+            var fullPath = webRootPath + "/Images/" + entity.ImagePath;
+            var result = FileUpload.Delete(fullPath);
+            if (result)
             {
-                return new ErrorResult();
+                _carImageDal.Delete(entity);
+                return new SuccessResult();
             }
-            _carImageDal.Delete(entity);
-            return new SuccessResult();
+            return new ErrorResult("Resim silinemedi");
+            
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -90,15 +98,21 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile image, CarImage carImage)
         {
+            var carImg = _carImageDal.Get(x => x.Id == carImage.Id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+
+
+            var fullPath = webRootPath + "/Images/" + carImg.ImagePath;
+            
             var result = BusinessRules.Run(CheckIfCarImageLimitExceded(carImage.CarId));
             if (result != null)
             {
                 return result;
             }
-            var carImg = _carImageDal.Get(x => x.Id == carImage.Id);
+            
             carImg.Date = DateTime.Now;
             carImg.ImagePath = FileUpload.Add(image);
-            FileUpload.Delete(carImage.ImagePath);
+           FileUpload.Delete(fullPath);
             _carImageDal.Update(carImg);
             return new SuccessResult();
         }
@@ -115,7 +129,10 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> Get(int id)
         {
-            throw new NotImplementedException();
+            var result = _carImageDal.Get(c => c.Id == id);
+            
+                return new SuccessDataResult<CarImage>(result);
+           
         }
     }
 }
