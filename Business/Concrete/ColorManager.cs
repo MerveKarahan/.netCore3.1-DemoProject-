@@ -1,12 +1,14 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Business.Concrete
 {
@@ -36,10 +38,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
         [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<List<Color>> GetAll()
         {
-
-            
+            Thread.Sleep(6000);
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
 
         }

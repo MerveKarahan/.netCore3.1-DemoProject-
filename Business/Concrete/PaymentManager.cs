@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities;
 using Core.Utilities.Results;
@@ -13,7 +14,7 @@ namespace Business.Concrete
     {
         [ValidationAspect(typeof(PaymentValidator))]
         //[PerformanceAspect(5)]
-       // [TransactionScopeAspect]
+        [TransactionScopeAspect]
         public IResult MakePayment(IPaymentModel paymentModel)
         {
             return new SuccessResult();
