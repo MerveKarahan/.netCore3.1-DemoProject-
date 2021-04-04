@@ -5,7 +5,7 @@ using System.Text;
 namespace Core.Entities.Concrete
 {
 
-    public class CreditCardModel : IPaymentModel
+    public class CreditCardModel 
     {
         public string CardHolderName { get; set; }
         public int ExpirationMonth { get; set; }

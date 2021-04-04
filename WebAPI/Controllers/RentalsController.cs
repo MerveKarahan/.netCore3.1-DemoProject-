@@ -14,12 +14,12 @@ namespace WebAPI.Controllers
     public class RentalsController : ControllerBase
     {
         private readonly IRentalService _rentalService;
-        private readonly IPaymentService _paymentService;
+       
 
-        public RentalsController(IRentalService rentalService, IPaymentService paymentService)
+        public RentalsController(IRentalService rentalService)
         {
             _rentalService = rentalService;
-            _paymentService = paymentService;
+     
         }
 
         [HttpGet]
@@ -47,11 +47,11 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(RentalPaymentDto rentalPaymentDto)
         {
-            var paymentResult = _paymentService.MakePayment(rentalPaymentDto.CreditCardModel);
-            if (!paymentResult.Success)
-            {
-                return BadRequest(paymentResult);
-            }
+            //var paymentResult = _paymentService.MakePayment(rentalPaymentDto.CreditCardModel);
+            //if (!paymentResult.Success)
+            //{
+            //    return BadRequest(paymentResult);
+            //}
             var result = _rentalService.Add(rentalPaymentDto.Rental);
 
             if (result.Success)
