@@ -1,0 +1,88 @@
+﻿
+CREATE TABLE [dbo].[Brands] (
+    [BrandId]   INT           IDENTITY (1, 1) NOT NULL,
+    [BrandName] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([BrandId] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[CarImages] (
+    [Id]        INT            IDENTITY (1, 1) NOT NULL,
+    [CarId]     INT            NOT NULL,
+    [ImagePath] NVARCHAR (250) NOT NULL,
+    [Date]      DATETIME       NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[Cars] (
+    [CarId]       INT             IDENTITY (1, 1) NOT NULL,
+    [CarName]     NVARCHAR (50)   NOT NULL,
+    [BrandId]     INT             NOT NULL,
+    [ColorId]     INT             NOT NULL,
+    [ModelYear]   INT             NOT NULL,
+    [DailyPrice]  DECIMAL (18, 2) NOT NULL,
+    [Description] NVARCHAR (MAX)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([CarId] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[Colors] (
+    [ColorId]   INT           IDENTITY (1, 1) NOT NULL,
+    [ColorName] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([ColorId] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[Customers] (
+    [CustomerId]          INT           IDENTITY (1, 1) NOT NULL,
+    [UserId]              INT           NOT NULL,
+    [CompanyName]         NVARCHAR (50) NOT NULL,
+    [CustomerPhoneNumber] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([CustomerId] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[OperationClaims] (
+    [Id]   INT           IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[Rentals] (
+    [Id]         INT      IDENTITY (1, 1) NOT NULL,
+    [CarId]      INT      NOT NULL,
+    [CustomerId] INT      NOT NULL,
+    [RentDate]   DATETIME NULL,
+    [ReturnDate] DATETIME NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[UserOperationClaims] (
+    [Id]               INT IDENTITY (1, 1) NOT NULL,
+    [UserId]           INT NOT NULL,
+    [OperationClaimId] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+-
+-
+-
+CREATE TABLE [dbo].[Users] (
+    [Id]           INT             IDENTITY (1, 1) NOT NULL,
+    [FirstName]    NVARCHAR (50)   NOT NULL,
+    [LastName]     NVARCHAR (50)   NOT NULL,
+    [Email]        NVARCHAR (50)   NOT NULL,
+    [PasswordSalt] VARBINARY (MAX) NOT NULL,
+    [PasswordHash] VARBINARY (MAX) NOT NULL,
+    [Status]       BIT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
