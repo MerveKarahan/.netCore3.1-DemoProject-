@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[Rentals] (
 -
 -
 -
-CREATE TABLE [dbo].[UserOperationClaims] (
+CREATE TABLE [dbo].[UserOperationsClaims] (
     [Id]               INT IDENTITY (1, 1) NOT NULL,
     [UserId]           INT NOT NULL,
     [OperationClaimId] INT NOT NULL,
