@@ -46,5 +46,33 @@ namespace DataAccess.Concrete.EntityFramework
             
         }
 
+        public List<RentalListDto> GetRentalList()
+        {
+            var result = (from rent in _reCapContext.Rentals
+                          join customer in _reCapContext.Customers
+                          on rent.CustomerId equals customer.CustomerId
+                          join car in _reCapContext.Cars
+                          on rent.CarId equals car.CarId
+                          join user in _reCapContext.Users
+                          on customer.UserId equals user.Id
+                          join brand in _reCapContext.Brands
+                          on car.BrandId equals brand.BrandId
+                          
+                          select new RentalListDto
+                          {
+                             
+                              FirstName = user.FirstName,
+                              LastName = user.LastName,                          
+                              RentDate = rent.RentDate,
+                              ReturnDate = rent.ReturnDate,
+                              BrandName= brand.BrandName,
+                              Id=rent.Id
+                              
+                            
+
+                          }).ToList();
+            return result;
+
+        }
     }
 }

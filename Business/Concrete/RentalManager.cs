@@ -68,6 +68,12 @@ namespace Business.Concrete
             return new SuccessDataResult<RentalDetailDto>(_rentalDal.GetRentalDetailsById(RentalId));
         }
 
+        public IDataResult<List<RentalListDto>> GetRentalList()
+        {
+            return new SuccessDataResult<List<RentalListDto>>
+                (_rentalDal.GetRentalList(),Messages.RentalListed);
+        }
+
         public IResult TransactionalOperation(Rental rental)
         {
             _rentalDal.Add(rental);
