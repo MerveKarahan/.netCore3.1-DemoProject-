@@ -44,7 +44,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<CarDetailDto> GetCarDetails(int id)
+        public CarDetailDto GetCarDetails(int id)
         {
             using (ReCapContext context = new ReCapContext())
             {
@@ -71,7 +71,7 @@ namespace DataAccess.Concrete.EntityFramework
                                                  select cI.ImagePath).ToList()
 
                              };
-                return result.ToList();
+                return result.FirstOrDefault();
             }
         }
     }
