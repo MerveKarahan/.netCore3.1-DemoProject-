@@ -7,12 +7,32 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
 
     public class EfUserDal : EfEntityRepositoryBase<User, ReCapContext>, IUserDal
     {
+        public UserInformationDto GetById(int Id)
+        {
+            using (var context = new ReCapContext())
+            {
+                var result = context.Users.Select(q => new UserInformationDto
+                {
+                    UserId = q.Id,
+                    FirstName = q.FirstName,
+                    LastName = q.LastName,
+                    Email = q.Email
+
+
+
+                }).FirstOrDefault(q => q.UserId == Id);
+
+                return result;
+            }
+        }
+
         public List<OperationClaim> GetClaims(User user)
         {
             using (var context = new ReCapContext())

@@ -83,7 +83,7 @@ namespace WebAPI.Controllers
 
             if (!checkPasswordMatch.Success)
             {
-                return BadRequest(checkPasswordMatch.Message);
+                return BadRequest(checkPasswordMatch);
             }
             var result = _userService.ChangePassword(changePasswordDto);
             if (result.Success)
@@ -92,5 +92,19 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("userInformation")]
+        public IActionResult UserInformationDto(UserInformationDto userInformationDto)
+        {
+
+
+            var result = _userService.ChangeUserInformation(userInformationDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
+

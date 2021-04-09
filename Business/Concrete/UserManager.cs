@@ -53,13 +53,10 @@ namespace Business.Concrete
 
         //[CacheAspect]
         //[PerformanceAspect(5)]
-        public IDataResult<User> GetById(int id)
+        public IDataResult<UserInformationDto> GetById(int id)
         {
-            if (DateTime.Now.Hour == 00)
-            {
-                return new ErrorDataResult<User>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<User>(_userDal.Get(b => b.Id == id));
+              
+            return new SuccessDataResult<UserInformationDto>(_userDal.GetById(id));
         }
 
         public IResult Update(User user)
@@ -100,5 +97,17 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
+
+        public IResult ChangeUserInformation(UserInformationDto userInformationDto)
+        {
+            var user = _userDal.Get(q => q.Id == userInformationDto.UserId);
+            user.Email = userInformationDto.Email;
+            user.FirstName = userInformationDto.FirstName;
+            user.LastName = userInformationDto.LastName;
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
+        }
+
+      
     }
 }
