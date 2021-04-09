@@ -5,8 +5,10 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -77,6 +79,26 @@ namespace Business.Concrete
         public IDataResult<User> GetByMail(string email)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        public IResult ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(changePasswordDto.Password, out passwordHash, out passwordSalt);
+            var user = _userDal.Get(q => q.Id == changePasswordDto.UserId);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            _userDal.Update(user);
+            return new SuccessResult(Messages.PasswordUpdated);
+
+        }
+        public IResult CheckPasswordMatch(string password, string passwordConfirm)
+        {
+            if (password !=passwordConfirm)
+            {
+                return new ErrorResult(Messages.PasswordNotMatch);
+            }
+            return new SuccessResult();
         }
     }
 }

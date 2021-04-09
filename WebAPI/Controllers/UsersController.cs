@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,24 @@ namespace WebAPI.Controllers
         public IActionResult Update(User user)
         {
             var result = _userService.Update(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("changepassword")]
+        public IActionResult ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+
+            var checkPasswordMatch = _userService.
+                CheckPasswordMatch(changePasswordDto.Password, changePasswordDto.PasswordConfirm);
+
+            if (!checkPasswordMatch.Success)
+            {
+                return BadRequest(checkPasswordMatch.Message);
+            }
+            var result = _userService.ChangePassword(changePasswordDto);
             if (result.Success)
             {
                 return Ok(result);
