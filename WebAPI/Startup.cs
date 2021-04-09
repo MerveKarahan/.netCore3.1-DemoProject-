@@ -65,7 +65,7 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.ConfigureCustomExceptionMiddleware();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseSwagger();
 
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ReCap Project"));
