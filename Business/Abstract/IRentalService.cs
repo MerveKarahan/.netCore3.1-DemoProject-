@@ -16,6 +16,7 @@ namespace Business.Abstract
         IDataResult<List<Rental>> GetAll();
         IDataResult<Rental> GetById(int rentalId);
         IDataResult<List<RentalListDto>> GetRentalList();
+        IResult CheckCarRentalAble(Rental rental);
 
         IDataResult<RentalDetailDto> GetRentalDetailsById(int id);
         IDataResult<List<Rental>> GetRentalDetailsByCustomerId(int id);

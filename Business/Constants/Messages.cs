@@ -13,6 +13,7 @@ namespace Business.Constants
         public static string CarUpdated = "Araç güncellendi";
         public static string CarDeleted = "Araç silindi";
         public static string CarListed = "Araçlar listelendi";
+        public static string CarNotRent = "Araba Kiralanamaz";
         public static string CarPriceInvalid = "Araç günlük fiyatı için girdiğiniz değer 0 dan büyük olmalıdır.";
 
         public static string BrandNameInvalid = "Marka adı en az 3 karakter olmalıdır.";
