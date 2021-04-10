@@ -41,7 +41,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public IDataResult<List<Color>> GetAll()
         {
-            Thread.Sleep(6000);
+            //Thread.Sleep(6000);
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
 
         }
