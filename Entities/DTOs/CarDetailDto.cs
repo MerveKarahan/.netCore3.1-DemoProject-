@@ -17,5 +17,6 @@ namespace Entities.DTOs
         public decimal DailyPrice { get; set; }
         public string Description { get; set; }
         public List<string> CarImagesPaths { get; set; }
+        public int MinFindexPoint { get; set; }
     }
 }

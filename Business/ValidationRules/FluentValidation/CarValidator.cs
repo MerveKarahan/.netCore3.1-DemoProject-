@@ -22,6 +22,8 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.ColorId).NotEmpty();
             RuleFor(p => p.CarName).NotEmpty();
             RuleFor(p => p.CarName).MinimumLength(2);
+            RuleFor(p => p.MinFindexPoint).LessThan(1900);
+            RuleFor(p => p.MinFindexPoint).GreaterThan(0);
             
         }
     }

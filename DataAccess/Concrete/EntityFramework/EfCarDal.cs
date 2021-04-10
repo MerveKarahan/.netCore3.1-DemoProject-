@@ -35,6 +35,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description = c.Description,
                                  ColorName = color.ColorName,
                                  ModelYear = c.ModelYear,
+                                 MinFindexPoint=c.MinFindexPoint ?? 0,
+
                                  CarImagesPaths = (from cI in context.CarImages
                                                    where cI.CarId == c.CarId
                                                    select cI.ImagePath).ToList()
@@ -66,7 +68,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description=c.Description,
                                  ColorName=color.ColorName,
                                  ModelYear=c.ModelYear,
-                                 CarImagesPaths=(from cI in context.CarImages
+                                 MinFindexPoint = c.MinFindexPoint ?? 0,
+                                 CarImagesPaths =(from cI in context.CarImages
                                                  where cI.CarId == c.CarId
                                                  select cI.ImagePath).ToList()
 
