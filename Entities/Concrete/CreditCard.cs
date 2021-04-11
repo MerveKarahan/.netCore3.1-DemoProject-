@@ -13,5 +13,11 @@ namespace Entities.Concrete
         public string CardExprationDate { get; set; }
         public string CardNumber { get; set; }
         public string CVV { get; set; }
+
+        //1.data yı yap.
+        //2.manager-service(add getbyuserID
+        //autofac
+        //controller yaz
+        //test et
     }
 }
