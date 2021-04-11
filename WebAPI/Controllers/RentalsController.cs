@@ -58,11 +58,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(RentalPaymentDto rentalPaymentDto)
         {
-            //var paymentResult = _paymentService.MakePayment(rentalPaymentDto.CreditCardModel);
-            //if (!paymentResult.Success)
-            //{
-            //    return BadRequest(paymentResult);
-            //}
+            
             var result = _rentalService.Add(rentalPaymentDto.Rental);
 
             if (result.Success)

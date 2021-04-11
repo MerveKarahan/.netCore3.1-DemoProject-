@@ -86,3 +86,12 @@ CREATE TABLE [dbo].[Users] (
     [Status]       BIT             NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+CREATE TABLE [dbo].[CreditCards]
+(
+	[CreditCardId] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [UserId] INT NOT NULL, 
+    [CardHolderName] NVARCHAR(50) NOT NULL, 
+    [CardExprationDate] NVARCHAR(50) NOT NULL, 
+    [CardNumber] NVARCHAR(50) NOT NULL, 
+    [CVV] NVARCHAR(50) NOT NULL
+)
