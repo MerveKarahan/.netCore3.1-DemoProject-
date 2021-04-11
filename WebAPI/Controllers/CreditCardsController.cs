@@ -24,6 +24,8 @@ namespace WebAPI.Controllers
         [HttpGet("id")]
         public IActionResult GetCreditCardById(int id)
         {
+
+
             var result = _creditCardService.GetCreditCardById(id);
             if (result.Success)
             {
@@ -34,7 +36,7 @@ namespace WebAPI.Controllers
         [HttpGet("userid")]
         public IActionResult GetCreditCardByUserId(int id)
         {
-            var result = _creditCardService.GetCreditCardByUserId(id);
+            var result = _creditCardService.GetCreditCardsByUserId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,7 +46,8 @@ namespace WebAPI.Controllers
 
         [HttpPost("add")]
         public IActionResult Add(CreditCard creditCard)
-        {
+        { 
+     
             var result = _creditCardService.Add(creditCard);
             if (result.Success)
             {

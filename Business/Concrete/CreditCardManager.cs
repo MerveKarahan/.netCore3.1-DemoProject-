@@ -17,6 +17,12 @@ namespace Business.Concrete
         }
         public IResult Add(CreditCard creditCard)
         {
+            var cardCheck = _creditCardDal.Get(q => q.CardNumber == creditCard.CardNumber);
+            if(cardCheck != null)
+            {
+                return new ErrorResult();
+            }
+
             _creditCardDal.Add(creditCard);
             return new SuccessResult();
         }
@@ -26,9 +32,9 @@ namespace Business.Concrete
             return new SuccessDataResult<CreditCard>(_creditCardDal.Get(c => c.CreditCardId == CreditCardId));
         }
 
-        public IDataResult<CreditCard> GetCreditCardByUserId(int UserId)
+        public IDataResult<List<CreditCard>> GetCreditCardsByUserId(int UserId)
         {
-            return new SuccessDataResult<CreditCard>(_creditCardDal.Get(c => c.UserId == UserId));
+            return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(c => c.UserId == UserId));
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Business.Abstract
     {
         IResult Add(CreditCard creditCard);
         IDataResult<CreditCard> GetCreditCardById(int CreditCardId);
-        IDataResult<CreditCard> GetCreditCardByUserId(int UserId);
+        IDataResult<List<CreditCard>> GetCreditCardsByUserId(int UserId);
     }
 }
