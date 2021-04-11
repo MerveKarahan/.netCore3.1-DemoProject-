@@ -7,6 +7,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -29,7 +30,7 @@ namespace Business.Concrete
         }
         public IResult CheckCarRentalAble(Rental rental)
         {
-            var rentalCar = _rentalDal.Get(r => r.CarId == rental.CarId);
+            var rentalCar = _rentalDal.GetAll(r => r.CarId == rental.CarId).OrderByDescending(q => q.Id).FirstOrDefault();
             if (rentalCar==null)
             {
                 return new SuccessResult();
@@ -95,5 +96,6 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
+
     }
 }
